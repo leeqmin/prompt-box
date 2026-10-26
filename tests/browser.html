@@ -9,7 +9,7 @@
 <div id="out"></div>
 <script type="module">
 // ?only=model,backup 처럼 일부만 실행할 수 있다.
-const ALL = ['model', 'backup'];
+const ALL = ['model', 'backup', 'db', 'images', 'math', 'backup-io'];
 const only = new URLSearchParams(location.search).get('only');
 const suites = only ? only.split(',') : ALL;
 const { run } = await import('./harness.js');
