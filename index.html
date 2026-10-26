@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>문항 프롬프트 저장소</title>
+<meta name="theme-color" content="#2f5d8a">
+<link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#/">문항 프롬프트 저장소</a>
+  <nav>
+    <a class="btn primary" href="#/new">새 프롬프트</a>
+    <a class="btn icon" href="#/settings" title="설정" aria-label="설정">⚙</a>
+  </nav>
+</header>
+<div id="banners"></div>
+<main id="layout">
+  <section id="list-pane" aria-label="프롬프트 목록"></section>
+  <section id="detail-pane" aria-live="polite"></section>
+</main>
+<div id="toast" role="status" hidden></div>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
