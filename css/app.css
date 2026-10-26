@@ -138,5 +138,7 @@ dialog.viewer img { max-width: 96vw; max-height: 90vh; display: block; }
 .dropzone.over { border-color: var(--accent); color: var(--accent); }
 .errors { color: var(--bad); }
 .back-link { margin-bottom: 8px; }
+.sticky-actions { position: sticky; bottom: 0; padding: 10px 0; background: var(--bg); border-top: 1px solid var(--line); }
+.result-edit { padding-top: 10px; }
 @media (min-width: 768px) { .back-link { display: none; } }
 .stack > * + * { margin-top: 8px; }
