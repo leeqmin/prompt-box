@@ -120,6 +120,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
 .result { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); margin: 10px 0; }
 .result > summary { list-style: none; cursor: pointer; padding: 10px 12px; min-height: 44px; display: flex; gap: 8px; align-items: center; }
 .result > summary::-webkit-details-marker { display: none; }
+.result > summary > strong, .result > summary > .verdict { white-space: nowrap; flex: none; }
 .result > summary::before { content: '▸'; color: var(--muted); }
 .result[open] > summary::before { content: '▾'; }
 .result-body { padding: 0 12px 12px; }
@@ -136,4 +137,6 @@ dialog.viewer img { max-width: 96vw; max-height: 90vh; display: block; }
 .dropzone { margin-top: 8px; padding: 10px; border: 1px dashed var(--line); border-radius: 8px; text-align: center; color: var(--muted); }
 .dropzone.over { border-color: var(--accent); color: var(--accent); }
 .errors { color: var(--bad); }
+.back-link { margin-bottom: 8px; }
+@media (min-width: 768px) { .back-link { display: none; } }
 .stack > * + * { margin-top: 8px; }
