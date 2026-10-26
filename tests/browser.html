@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>prompt-box tests</title>
+<style>body{font:13px monospace;white-space:pre-wrap}.pass{color:#080}</style>
+</head>
+<body>
+<div id="out"></div>
+<script type="module">
+// ?only=model,backup 처럼 일부만 실행할 수 있다.
+const ALL = ['model', 'backup'];
+const only = new URLSearchParams(location.search).get('only');
+const suites = only ? only.split(',') : ALL;
+const { run } = await import('./harness.js');
+try {
+  for (const name of suites) await import(`./${name}.test.js`);
+  await run();
+} catch (err) {
+  window.__results = { passed: 0, failed: 1, failures: [{ name: 'load', error: String(err && err.stack || err) }] };
+  document.getElementById('out').textContent = 'LOAD ERROR ' + err;
+}
+</script>
+</body>
+</html>
