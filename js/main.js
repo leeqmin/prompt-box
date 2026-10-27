@@ -94,13 +94,15 @@ export async function updateBackupBanner() {
 // 새 버전 서비스 워커가 기다리면 띠를 보여 주고, 누르면 바꾼 뒤 새로고침한다.
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
+  // 첫 설치 때도 controllerchange가 일어나므로, 사용자가 「새로고침」을 누른 경우에만 다시 불러온다.
+  let updateRequested = false;
   const offer = worker => setBanner('update', {
-    text: '새 버전이 있습니다.', actionText: '새로고침', onAction: () => worker.postMessage('skipWaiting'),
+    text: '새 버전이 있습니다.', actionText: '새로고침',
+    onAction: () => { updateRequested = true; worker.postMessage('skipWaiting'); },
   });
-  let reloading = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (reloading) return;
-    reloading = true;
+    if (!updateRequested) return;
+    updateRequested = false;
     location.reload();
   });
   navigator.serviceWorker.register('./sw.js').then(reg => {
