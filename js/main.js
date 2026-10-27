@@ -2,8 +2,9 @@
 import { openDb, listPrompts, cleanupOrphanImages, getMeta } from './db.js';
 import { renderList, loadListState } from './views/list.js';
 import { el, setBanner } from './ui.js';
+import { APP_VERSION } from './version.js';
 
-export const APP_VERSION = '1.0.0';
+export { APP_VERSION };
 const BACKUP_REMIND_DAYS = 14;
 
 const views = {
@@ -90,7 +91,31 @@ export async function updateBackupBanner() {
   setBanner('backup', stale ? { text: '백업한 지 오래됐어요.', actionText: '지금 백업', onAction: () => go('#/settings') } : null);
 }
 
+// 새 버전 서비스 워커가 기다리면 띠를 보여 주고, 누르면 바꾼 뒤 새로고침한다.
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  const offer = worker => setBanner('update', {
+    text: '새 버전이 있습니다.', actionText: '새로고침', onAction: () => worker.postMessage('skipWaiting'),
+  });
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    if (reg.waiting && navigator.serviceWorker.controller) offer(reg.waiting);
+    reg.addEventListener('updatefound', () => {
+      const worker = reg.installing;
+      worker.addEventListener('statechange', () => {
+        if (worker.state === 'installed' && navigator.serviceWorker.controller) offer(worker);
+      });
+    });
+  }).catch(() => { /* 서비스 워커가 없어도 앱은 동작 */ });
+}
+
 async function start() {
+  registerServiceWorker();
   try {
     app.db = await openDb();
   } catch {

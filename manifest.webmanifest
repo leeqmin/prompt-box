@@ -1,0 +1,16 @@
+{
+  "name": "문항 프롬프트 저장소",
+  "short_name": "프롬프트 저장소",
+  "description": "문항 제작 프롬프트와 결과를 이 기기에 보관하는 개인용 앱",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f8",
+  "theme_color": "#2f5d8a",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
